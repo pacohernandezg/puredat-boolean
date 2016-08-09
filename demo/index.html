@@ -20,8 +20,12 @@
 			<h3>Basic puredat-boolean Demo</h3>
 			<demo-snippet> 
 				<template> 
-					<puredat-boolean name="testField" label="Test" error-message="Bla">
-					</puredat-boolean> 
+					<div style="display: flex">
+						<puredat-boolean required name="testField" label="Test" error-message="Error 1" cols="4">
+						</puredat-boolean> 
+						<puredat-boolean name="testField2" label="Test" error-message="Error 2" cols="6">
+						</puredat-boolean> 
+					</div>
 				</template> 
 			</demo-snippet>
 		</div>
@@ -30,13 +34,17 @@
 			<demo-snippet>
 				<template>
 					<div style="display: flex">
-						<puredat-boolean id="errorField"
+						<puredat-boolean 
+								id="errorField"
+								required
 								max-length="5"
 								label="Just a boolean test"
 								cols="2"
 								value="true">
 						</puredat-boolean>
-						<puredat-boolean cols="8">
+						<puredat-boolean 
+							required
+							cols="8">
 						</puredat-boolean>
 					</div>
 					<paper-button onclick="setErrorMessageClickHandler(event)">Set error message</paper-button>
@@ -57,7 +65,9 @@
 			<h3>Get / Set value</h3>
 			<demo-snippet> 
 				<template> 
-					<puredat-boolean id="test">
+					<puredat-boolean 
+							id="test"
+							required>
 					</puredat-boolean> 
 					<paper-button onclick="getValueClickHandler(event)">Get value</paper-button>
 					<paper-button onclick="setValueClickHandler(event)">Set value</paper-button>
@@ -68,11 +78,11 @@
 						}
 						
 						function setValueClickHandler(event) {
-							document.getElementById("test").value = true;
+							document.getElementById("test").value = "true";
 						}
 						
 						function resetValueClickHandler(event) {
-							document.getElementById("test").value = false;
+							document.getElementById("test").value = "false";
 						}
 					</script>
 				</template>
@@ -82,7 +92,10 @@
 			<h3>Read only / disabled</h3>
 			<demo-snippet> 
 				<template> 
-					<puredat-boolean read-only value="true">
+					<puredat-boolean 
+							read-only 
+							value="true"
+							required>
 					</puredat-boolean> 
 				</template>
 			</demo-snippet>

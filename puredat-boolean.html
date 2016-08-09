@@ -1,5 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../paper-radio-group/paper-radio-group.html">
 <!--
 	`puredat-boolean` "BOOLEAN" type, "ONE" cardinality widget.
 	
@@ -24,7 +26,7 @@
 				min-height: 20px;
 			}
 
-			error {
+			.error {
 				display: inline-block;
 				color: #dd2c00;
 			}
@@ -32,7 +34,16 @@
 			paper-checkbox {
 				display: block;
 				min-height: 23px;
-				--paper-checkbox-checked-color: var(--accent-color);
+				--paper-checkbox-checked-color: var(--default-primary-color);
+			}
+			
+			paper-radio-group {
+				display: block;
+			}
+			
+			paper-radio-button {
+				padding-top: 0;
+				padding-bottom: 4px;
 			}
 			
 			.container {
@@ -41,12 +52,22 @@
 		
 		<div class="container">
 			<label>[[label]]</label>
-			<paper-checkbox
-					checked$="[[value]]" 
-					disabled$="[[readOnly]]"
-					invalid$="[[_isInvalid(errorMessage)]]">
-			</paper-checkbox>
-			<error>[[errorMessage]]</error>			
+			<template is="dom-if" if="[[required]]">
+				<paper-checkbox
+						checked="{{_checked}}" 
+						disabled$="[[readOnly]]"
+						invalid$="[[_isInvalid(errorMessage)]]">
+				</paper-checkbox>
+			</template>
+			<template is="dom-if" if="[[!required]]">
+				<paper-radio-group
+						selected="{{_value}}">
+					<paper-radio-button name="not-specified">No especificado</paper-radio-button>
+					<paper-radio-button name="false">No</paper-radio-button>
+					<paper-radio-button name="true">Sí</paper-radio-button>					
+				</paper-radio-group>
+			</template>
+			<label class="error">[[errorMessage]]</label>			
 		</div>
 	</template>
 	
@@ -74,9 +95,17 @@
 				
 				/** Value. */
 				value: {
-					type: Boolean,
-					value: false,
+					type: String,
 					notify: true
+				},
+
+				/** Internal value when checkbox is used (required) */
+				_checked: {
+					type: Boolean,
+				},
+
+				_value: {
+					type: String
 				},
 				
 				/** Error message. */
@@ -98,6 +127,40 @@
 				}
 			},
 			
+			observers: [
+				'valueChangedHandler(value)',
+				'_valueChangedHandler(_value)',
+				'_checkedChangedHandler(_checked)'
+			],
+			
+			valueChangedHandler: function(value) {
+				if (this.required) {
+					this.set("_checked", (value == "true"));
+console.log(this._checked);
+				}
+				else {
+					if (value == null) {
+						this.set("_value", "not-specified");
+					}
+					else {
+						this.set("_value", value);
+					}
+				}
+			},
+			
+			_valueChangedHandler: function(_value) {
+				if (_value == "not-specified") {
+					this.set("value", null);
+				}
+				else {
+					this.set("value", _value);
+				}
+			},
+			
+			_checkedChangedHandler: function(_checked) {
+				this.set("value", _checked + "");
+			},
+			
 			_colsChanged: function(newValue, oldValue) {
 				this.style.minWidth = (50 * newValue) + "px";
 				this.style.flex = (10 * newValue) + "%";
@@ -111,6 +174,12 @@
 			_isInvalid: function(errorMessage) {
 				return errorMessage != null
 						&& errorMessage != "";
+			},
+			
+			ready: function() {
+				if (this.value == null && !this.required) {
+					this.set("_value", "not-specified");
+				}
 			}
 		});
 	</script>
