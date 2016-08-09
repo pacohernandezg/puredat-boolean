@@ -1,34 +1,113 @@
 <link rel="import" href="../polymer/polymer.html">
-
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <!--
-`puredat-boolean`
-
-
-@demo demo/index.html 
+	`puredat-boolean` "BOOLEAN" type, "ONE" cardinality widget.
+	
+	@demo demo/index.html 
 -->
-
 <dom-module id="puredat-boolean">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>TO-DO [[prop1]]</h2>
-  </template>
+	<template>
+		<style>
+			:host {
+				display: block;
+				padding: 8px 0;
+				font-family: 'Roboto', 'Noto', sans-serif;
+				font-size: 12px;
+				font-weight: 400;
+				line-height: 20px;
+			}
+			
+			label {
+				display: block;
+				min-height: 20px;
+			}
 
-  <script>
-    Polymer({
-
-      is: 'puredat-boolean',
-
-      properties: {
-        prop1: {
-          type: String,
-          value: 'puredat-boolean',
-        },
-      },
-
-    });
-  </script>
+			error {
+				display: block;
+				color: #dd2c00;
+			}
+			
+			paper-checkbox {
+				display: block;
+			}
+			
+			.container {
+				min-height: 60px;
+			}
+		</style>
+		
+		<div class="container">
+			<label>[[label]]</label>
+			<paper-checkbox
+					checked$="[[value]]" 
+					disabled$="[[readOnly]]"
+					invalid$="[[_isInvalid(errorMessage)]]">
+			</paper-checkbox>
+			<error>[[errorMessage]]</error>			
+		</div>
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'puredat-boolean',
+			
+			properties: {
+				
+				/** Name. */
+				name: {
+					type: String
+				},
+				
+				/** Required. */
+				required: {
+					type: Boolean,
+					value: false
+				},
+				
+				/** Descriptive label. */
+				label: {
+					type: String
+				},
+				
+				/** Value. */
+				value: {
+					type: Boolean,
+					notify: true
+				},
+				
+				/** Error message. */
+				errorMessage: {
+					type: String
+				},
+				
+				/** Number of columns in a row of 10 columns. */
+				cols: {
+					type: Number,
+					value: 5,
+					observer: '_colsChanged'
+				},
+				
+				/** Read only. */
+				readOnly: {
+					type: Boolean,
+					value: false
+				}
+			},
+			
+			_colsChanged: function(newValue, oldValue) {
+				this.style.minWidth = (50 * newValue) + "px";
+				this.style.flex = (10 * newValue) + "%";
+			},
+			
+			/**
+			 * Returns if the field is valid.
+			 * @param {String} errorMessage The error message.
+			 * @return {Boolean} If the input field is valid.
+			 */
+			_isInvalid: function(errorMessage) {
+				return errorMessage != null
+						&& errorMessage != "";
+			}
+		});
+	</script>
 </dom-module>
