@@ -59,9 +59,9 @@
 			<template is="dom-if" if="[[!required]]">
 				<paper-radio-group
 						selected="{{_value}}">
-					<paper-radio-button style="padding-top: 0; padding-bottom: 4px" name="not-specified">No especificado</paper-radio-button>
-					<paper-radio-button style="padding-top: 0; padding-bottom: 4px" name="false">No</paper-radio-button>
-					<paper-radio-button style="padding-top: 0; padding-bottom: 4px" name="true">Sí</paper-radio-button>					
+					<paper-radio-button disabled$="[[readOnly]]" style="padding-top: 0; padding-bottom: 4px" name="not-specified">No especificado</paper-radio-button>
+					<paper-radio-button disabled$="[[readOnly]]" style="padding-top: 0; padding-bottom: 4px" name="false">No</paper-radio-button>
+					<paper-radio-button disabled$="[[readOnly]]" style="padding-top: 0; padding-bottom: 4px" name="true">Sí</paper-radio-button>					
 				</paper-radio-group>
 			</template>
 			<label class="error-message">[[errorMessage]]</label>			

@@ -21,83 +21,92 @@
 			<demo-snippet> 
 				<template> 
 					<div style="display: flex">
-						<puredat-boolean required name="testField" label="Test" error-message="Error 1" cols="4">
+						<puredat-boolean id="field1" required label="Test" cols="4">
 						</puredat-boolean> 
-						<puredat-boolean name="testField2" label="Test" error-message="Error 2" cols="6">
+						
+						<puredat-boolean required label="Another test" read-only cols="6" value="true">
 						</puredat-boolean> 
 					</div>
+					
+					<paper-button onclick="setField1ErrorMessageClickHandler(event)">Set error message</paper-button>
+					<paper-button onclick="resetField1ErrorMessageClickHandler(event)">Reset error message</paper-button>
+					
+					<paper-button onclick="getField1ValueClickHandler(event)">Get value</paper-button>
+					<paper-button onclick="setField1ValueClickHandler(event)">Set value</paper-button>
+					<paper-button onclick="resetField1ValueClickHandler(event)">Reset value</paper-button>
+					
+					<script>
+						function getField1ValueClickHandler(event) {
+							alert(document.getElementById("field1").value);
+							alert(typeof document.getElementById("field1").value);
+						}
+						
+						function setField1ValueClickHandler(event) {
+							document.getElementById("field1").value = "true";
+						}
+						
+						function resetField1ValueClickHandler(event) {
+							document.getElementById("field1").value = "false";
+						}
+						
+						function setField1ErrorMessageClickHandler(event) {
+							document.getElementById("field1").errorMessage = "Error message";
+						}
+						
+						function resetField1ErrorMessageClickHandler(event) {
+							document.getElementById("field1").errorMessage = null;
+						}
+					</script>
 				</template> 
 			</demo-snippet>
 		</div>
 		<div style="max-width: 1000px" class="vertical-section-container centered">
-			<h3>Basic attributes</h3>
-			<demo-snippet>
-				<template>
+			<h3>Basic puredat-boolean Demo</h3>
+			<demo-snippet> 
+				<template> 
 					<div style="display: flex">
-						<puredat-boolean 
-								id="errorField"
-								required
-								max-length="5"
-								label="Just a boolean test"
-								cols="2"
-								value="true">
-						</puredat-boolean>
-						<puredat-boolean 
-							required
-							cols="8">
-						</puredat-boolean>
+						<puredat-boolean id="field2" label="Test" cols="4">
+						</puredat-boolean> 
+						
+						<puredat-boolean label="Another test" read-only cols="6" value="true">
+						</puredat-boolean> 
 					</div>
-					<paper-button onclick="setErrorMessageClickHandler(event)">Set error message</paper-button>
-					<paper-button onclick="resetErrorMessageClickHandler(event)">Reset error message</paper-button>
+					
+					<paper-button onclick="setField2ErrorMessageClickHandler(event)">Set error message</paper-button>
+					<paper-button onclick="resetField2ErrorMessageClickHandler(event)">Reset error message</paper-button>
+					
+					<paper-button onclick="getField2ValueClickHandler(event)">Get value</paper-button>
+					<paper-button onclick="setField2ValueClickHandler(event)">Set value</paper-button>
+					<paper-button onclick="resetField2ValueClickHandler(event)">Reset value</paper-button>
+					<paper-button onclick="removeField2ValueClickHandler(event)">Remove value</paper-button>
+					
 					<script>
-						function setErrorMessageClickHandler(event) {
-							document.getElementById("errorField").errorMessage = "Error message";
+						function getField2ValueClickHandler(event) {
+							alert(document.getElementById("field2").value);
+							alert(typeof document.getElementById("field2").value);
 						}
 						
-						function resetErrorMessageClickHandler(event) {
-							document.getElementById("errorField").errorMessage = null;
+						function setField2ValueClickHandler(event) {
+							document.getElementById("field2").value = "true";
+						}
+						
+						function resetField2ValueClickHandler(event) {
+							document.getElementById("field2").value = "false";
+						}
+						
+						function removeField2ValueClickHandler(event) {
+							document.getElementById("field2").value = "not-specified";
+						}
+						
+						function setField2ErrorMessageClickHandler(event) {
+							document.getElementById("field2").errorMessage = "Error message";
+						}
+						
+						function resetField2ErrorMessageClickHandler(event) {
+							document.getElementById("field2").errorMessage = null;
 						}
 					</script>
 				</template> 
-			</demo-snippet>
-		</div>
-		<div style="max-width: 1000px" class="vertical-section-container centered">
-			<h3>Get / Set value</h3>
-			<demo-snippet> 
-				<template> 
-					<puredat-boolean 
-							id="test"
-							required>
-					</puredat-boolean> 
-					<paper-button onclick="getValueClickHandler(event)">Get value</paper-button>
-					<paper-button onclick="setValueClickHandler(event)">Set value</paper-button>
-					<paper-button onclick="resetValueClickHandler(event)">Reset value</paper-button>
-					<script>
-						function getValueClickHandler(event) {
-							alert(document.getElementById("test").value);
-						}
-						
-						function setValueClickHandler(event) {
-							document.getElementById("test").value = "true";
-						}
-						
-						function resetValueClickHandler(event) {
-							document.getElementById("test").value = "false";
-						}
-					</script>
-				</template>
-			</demo-snippet>
-		</div>
-		<div style="max-width: 1000px" class="vertical-section-container centered">
-			<h3>Read only / disabled</h3>
-			<demo-snippet> 
-				<template> 
-					<puredat-boolean 
-							read-only 
-							value="true"
-							required>
-					</puredat-boolean> 
-				</template>
 			</demo-snippet>
 		</div>
 	</body>
